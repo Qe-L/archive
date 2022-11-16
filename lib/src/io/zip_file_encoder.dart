@@ -15,16 +15,16 @@ class ZipFileEncoder {
   static const int STORE = 0;
   static const int GZIP = 1;
 
-  void zipDirectory(Directory dir,
+  zipDirectory(Directory dir,
       {String? filename,
       int? level,
       bool followLinks = true,
-      DateTime? modified}) {
+      DateTime? modified}) async {
     final dirPath = dir.path;
     final zipPath = filename ?? '$dirPath.zip';
     level ??= GZIP;
     create(zipPath, level: level, modified: modified);
-    addDirectory(dir,
+    await addDirectory(dir,
         includeDirName: false, level: level, followLinks: followLinks);
     close();
   }
